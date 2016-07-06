@@ -1,0 +1,14 @@
+# compiled source code
+target/
+pom.xml.tag
+test-output/
+lib/secondstring-master/class/
+lib/secondstring-master/javadoc/
+
+# output files generated when running benchmarks
+CharEdits*
+KeyboadEdits*
+PhoneticErrors*
+OCRErrors*
+MixErrors*
+
