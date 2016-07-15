@@ -8,12 +8,15 @@ import java.util.Scanner;
 import org.apache.commons.codec.language.Soundex;
 
 import edu.dase.prl.benchMark.records.BetterRecord;
+import edu.dase.prl.blockingMethods.DoubleMetaphoneBlockingMethod;
+import edu.dase.prl.blockingMethods.PrefixBlocking;
 import edu.dase.prl.encryption.DataEncryptor;
 
 public class SoundexEvaluator {
 
 	public static void main(String[] args) throws Exception {
 
+		
 		// Analyze the Soundex performance on encrypted last names
 		Soundex soundex = new Soundex();
 
@@ -26,6 +29,7 @@ public class SoundexEvaluator {
 			records.add(new BetterRecord(in.nextLine()));
 		}
 		in.close();
+
 
 		// Creating the blocking index -- this one is based on Soundex value of the last name
 		HashMap<String, ArrayList<BetterRecord>> blockingTable = new HashMap<>();
@@ -69,14 +73,14 @@ public class SoundexEvaluator {
 
 			// compute the encrypted soundex
 			String soundexQuery = DataEncryptor.encryptString(soundex.encode(lastName), "password");
-			//System.out.println(soundexQuery);
+			
 
 			// use that to compare to each record
 			ArrayList<Integer> matchingRecordIndices = new ArrayList<>();
 
 
 			int j = 0;
-			System.out.println(lastName + ": " + soundex.encode(lastName));
+			//System.out.println(lastName + ": " + soundex.encode(lastName));
 			ArrayList<BetterRecord> possibleMatches = blockingTable.get(soundex.encode(lastName));
 			if (possibleMatches != null) {
 				for (BetterRecord thisRecord: possibleMatches) {
@@ -124,9 +128,5 @@ public class SoundexEvaluator {
 		System.out.println("tp:" +tp);
 		System.out.println("fp:" +fp);
 		System.out.println("fn:" +fn);
-		System.out.println("index: "+ index);
-
-
-
 	}
 }
